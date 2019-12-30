@@ -1,5 +1,16 @@
 import React from 'react';
+import { Contacts } from '../contacts/Contacts';
+import { ContactForm } from '../contacts/ContactForm';
 
 export const Home = () => {
-  return <div>Home</div>;
+  return (
+    <div className='grid-2'>
+      <div>
+        <ContactForm />
+      </div>
+      <div>
+        <Contacts></Contacts>
+      </div>
+    </div>
+  );
 };
