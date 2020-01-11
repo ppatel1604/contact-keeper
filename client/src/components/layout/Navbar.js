@@ -1,29 +1,48 @@
-import React from 'react';
+import React, { useContext, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faIdCardAlt } from '@fortawesome/free-solid-svg-icons';
+import { faIdCardAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/auth/authContext';
 
 export const Navbar = ({ title, icon }) => {
+  const authContext = useContext(AuthContext);
+
+  const { isAuthenticated, logout, user } = authContext;
+
+  const onLogout = () => {
+    logout();
+  };
+
+  const authLinks = (
+    <Fragment>
+      <li>Hello {user && user.name}</li>
+      <li>
+        <a href='#!' onClick={onLogout}>
+          <FontAwesomeIcon icon={faSignOutAlt} />
+          <span className='hide-sm'>Logout</span>
+        </a>
+      </li>
+    </Fragment>
+  );
+
+  const guestLinks = (
+    <Fragment>
+      <li>
+        <Link to='/Register'>Register</Link>
+      </li>
+      <li>
+        <Link to='/Login'>Login</Link>
+      </li>
+    </Fragment>
+  );
+
   return (
     <div className='navbar bg-primary'>
       <h1>
         <FontAwesomeIcon icon={icon}></FontAwesomeIcon> {title}
       </h1>
-      <ul>
-        <li>
-          <Link to='/'>Home</Link>
-        </li>
-        <li>
-          <Link to='/About'>About</Link>
-        </li>
-        <li>
-          <Link to='/Register'>Register</Link>
-        </li>
-        <li>
-          <Link to='/Login'>Login</Link>
-        </li>
-      </ul>
+      <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
     </div>
   );
 };

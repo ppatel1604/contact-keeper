@@ -17,8 +17,8 @@ export const Login = props => {
     if (error === 'Please provide valid credentials') {
       setAlert(error, 'danger');
       clearErrors();
-      // eslint-disable-next-line
     }
+    // eslint-disable-next-line
   }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
